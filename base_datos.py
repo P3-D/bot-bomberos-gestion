@@ -34,10 +34,10 @@ def obtener_mapa_usuarios():
 # 2. CONEXIÓN LOCAL (Bodega SQLite)
 # =========================================================
 def inicializar_db_local():
-    """Crea la tabla en SQLite si es la primera vez que arranca el bot."""
+    """Crea las tablas en SQLite si es la primera vez que arranca el bot."""
     conn = sqlite3.connect('emergencias.db')
     cursor = conn.cursor()
-    # Creamos las 13 columnas exactas que necesitamos
+    
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS partes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,8 +56,21 @@ def inicializar_db_local():
             responsable TEXT
         )
     ''')
+
+    # 2. Tabla de Usuarios 
+    # Usamos el telegram_id como PRIMARY KEY para que no se repitan voluntarios
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS usuarios (
+            telegram_id INTEGER PRIMARY KEY,
+            nombre TEXT,
+            rango TEXT DEFAULT 'voluntario',
+            estado TEXT DEFAULT 'activo'
+        )
+    ''')
+    
     conn.commit()
     conn.close()
+    print("🏗️ Base de datos verificada y lista.")
 
 # =========================================================
 # 3. EL PUENTE DE GUARDADO (La función principal)
