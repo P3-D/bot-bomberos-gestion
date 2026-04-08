@@ -1,0 +1,15 @@
+# --- SECRETOS (Lo más importante) ---
+.env
+credenciales.json
+
+# --- DATOS REALES (Privacidad de la compañía) ---
+emergencias.db
+
+# --- ESCOMBROS Y TEMPORALES ---
+archivos_temporales/
+__pycache__/
+*.pyc
+
+# --- ARCHIVOS DE SISTEMA ---
+.DS_Store
+Thumbs.db
